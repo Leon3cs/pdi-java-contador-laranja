@@ -14,14 +14,17 @@ public class DetectOrangesExample {
 
     public static void main(String[] args) {
         Mat source = Imgcodecs.imread("resources/images/oranges.jfif");
+        Mat markedSource = Imgcodecs.imread("resources/images/oranges.jfif");
         Mat filtered = DetectOranges.applyFilter(source);
-//        Mat thresholded = DetectOranges.applyThreshold(filtered);
-//        Mat opened = DetectOranges.applyOpening(thresholded);
-        Mat transformed = DetectOranges.applyHoughTransform(filtered);
+        Mat thresholded = DetectOranges.applyThreshold(filtered);
+        Mat opened = DetectOranges.applyOpening(thresholded);
+        Mat blurred = DetectOranges.applyBlur(opened);
+        Mat transformed = DetectOranges.applyHoughTransform(blurred, markedSource);
         new ImShow("original").showImage(source);
-//        new ImShow("filtered").showImage(filtered);
-//        new ImShow("thresholded").showImage(thresholded);
-//        new ImShow("opened").showImage(opened);
+        new ImShow("filtered").showImage(filtered);
+        new ImShow("thresholded").showImage(thresholded);
+        new ImShow("opened").showImage(opened);
+        new ImShow("blurred").showImage(blurred);
         new ImShow("transformed").showImage(transformed);
     }
 }

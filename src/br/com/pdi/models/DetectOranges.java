@@ -32,7 +32,7 @@ public class DetectOranges {
         Imgproc.threshold(
                 source,
                 dst,
-                150.0,
+                140.0,
                 255.0,
                 Imgproc.THRESH_TOZERO);
 
@@ -54,26 +54,30 @@ public class DetectOranges {
         return dst;
     }
 
-    public static Mat applyHoughTransform(Mat source){
+    public static Mat applyBlur(Mat source){
         Mat dst = new Mat();
 
-        Imgproc.medianBlur(source, dst, 5);
+        Imgproc.medianBlur(source, dst, 3);
 
+        return dst;
+    }
+
+    public static Mat applyHoughTransform(Mat source, Mat originalImage){
         Mat circles = new Mat();
-        Imgproc.HoughCircles(dst, circles, Imgproc.HOUGH_GRADIENT, 1.0,
-                (double)dst.rows()/16, // change this value to detect circles with different distances to each other
-                100.0, 30.0, 1, 50); // change the last two parameters
+        Imgproc.HoughCircles(source, circles, Imgproc.HOUGH_GRADIENT, 1.8,
+                (double)source.cols()/20, // change this value to detect circles with different distances to each other
+                172.0, 30.0, 8, 75); // change the last two parameters
         // (min_radius & max_radius) to detect larger circles
         for (int x = 0; x < circles.cols(); x++) {
             double[] c = circles.get(0, x);
             Point center = new Point(Math.round(c[0]), Math.round(c[1]));
             // circle center
-            Imgproc.circle(dst, center, 1, new Scalar(0,100,100), 3, 8, 0 );
+            Imgproc.circle(originalImage, center, 1, new Scalar(0,100,100), 1, 8, 0 );
             // circle outline
             int radius = (int) Math.round(c[2]);
-            Imgproc.circle(dst, center, radius, new Scalar(255,0,255), 3, 8, 0 );
+            Imgproc.circle(originalImage, center, radius, new Scalar(255,0,255), 2, 8, 0 );
         }
 
-        return dst;
+        return originalImage;
     }
 }
