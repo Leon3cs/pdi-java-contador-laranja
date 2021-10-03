@@ -1,5 +1,6 @@
 package br.com.pdi.models;
 
+import br.com.pdi.util.ImShow;
 import org.opencv.core.*;
 import org.opencv.imgproc.Imgproc;
 
@@ -77,6 +78,8 @@ public class DetectOranges {
             int radius = (int) Math.round(c[2]);
             Imgproc.circle(originalImage, center, radius, new Scalar(255,0,255), 2, 8, 0 );
         }
+
+        new ImShow("Contagem de Laranjas").showText(String.valueOf(circles.cols()));
 
         return originalImage;
     }

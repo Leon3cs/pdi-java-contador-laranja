@@ -1,12 +1,10 @@
 package br.com.pdi.util;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
@@ -30,6 +28,15 @@ public class ImShow {
 		window.setTitle(title);
 		sizeCustom = false;
 		setCloseOption(0);
+	}
+
+	public void showText(String text){
+		window.setSize(new Dimension(350, 200));
+		label.setText(text);
+		label.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 80));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.updateUI();
+		window.setVisible(true);
 	}
 	
 	public void showImage(Mat img) {
